@@ -5,6 +5,8 @@ import type { UploadResult } from "@/lib/api";
 
 const ACCEPT = ".pdf,.png,.jpg,.jpeg,.webp,.txt,.md";
 
+export const DOC_DRAG_TYPE = "application/x-sukino-doc";
+
 export type UploadedDoc = UploadResult & { id: string; url: string };
 
 function viewerKind(url: string, filename: string) {

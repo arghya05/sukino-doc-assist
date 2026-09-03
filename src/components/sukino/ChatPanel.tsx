@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Send, MessageCircleHeart, Paperclip, X } from "lucide-react";
 import { LogoBadge } from "./Header";
-import type { UploadedDoc } from "./DocumentsPanel";
+import { DOC_DRAG_TYPE, type UploadedDoc } from "./DocumentsPanel";
 
 export type ChatMessage = { id: string; role: "user" | "assistant"; content: string };
-
-export const DOC_DRAG_TYPE = "application/x-sukino-doc";
 
 function ThinkingDots() {
   return (
