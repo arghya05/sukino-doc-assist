@@ -87,7 +87,7 @@ function Index() {
     if (!sessionId) return;
     const doc = attachedDoc;
     setAttachedDocId(null);
-    const content = doc ? `📎 ${doc.filename}\n\n${text}` : text;
+    const content = doc ? `Attachment: ${doc.filename}\n\n${text}` : text;
     setMessages((prev) => [...prev, { id: uid(), role: "user", content }]);
     setThinking(true);
     try {
