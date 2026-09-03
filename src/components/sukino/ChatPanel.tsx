@@ -129,6 +129,25 @@ export function ChatPanel({
       </div>
 
       <div className="border-t border-border p-4">
+        {attachedDoc && (
+          <div className="mb-2.5 flex items-center gap-2 rounded-xl border border-primary/40 bg-secondary px-3 py-2">
+            <Paperclip className="size-3.5 shrink-0 text-primary" />
+            <span className="min-w-0 flex-1 truncate text-xs font-semibold">
+              {attachedDoc.filename}
+            </span>
+            <span className="hidden text-[10px] text-muted-foreground sm:inline">
+              attached to your next message
+            </span>
+            <button
+              type="button"
+              onClick={onRemoveAttachment}
+              aria-label="Remove attachment"
+              className="flex size-5 shrink-0 items-center justify-center rounded-full hover:bg-background"
+            >
+              <X className="size-3" />
+            </button>
+          </div>
+        )}
         <div className="flex items-end gap-2">
           <input
             value={value}
