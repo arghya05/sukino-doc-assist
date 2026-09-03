@@ -27,13 +27,20 @@ export function ChatPanel({
   thinking,
   disabled,
   onSend,
+  attachedDoc,
+  onAttachDoc,
+  onRemoveAttachment,
 }: {
   messages: ChatMessage[];
   thinking: boolean;
   disabled: boolean;
   onSend: (text: string) => void;
+  attachedDoc: UploadedDoc | null;
+  onAttachDoc: (id: string) => void;
+  onRemoveAttachment: () => void;
 }) {
   const [value, setValue] = useState("");
+  const [dragOver, setDragOver] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
