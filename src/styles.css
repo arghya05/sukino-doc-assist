@@ -155,5 +155,41 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
   }
 }
+
+@utility bg-gradient-brand {
+  background-image: var(--gradient-brand);
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+
+@utility bubble-user {
+  background-color: var(--bubble-user);
+  color: var(--bubble-user-foreground);
+}
+
+@keyframes dot-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+@utility animate-dot {
+  animation: dot-bounce 1.1s infinite ease-in-out;
+}
+
