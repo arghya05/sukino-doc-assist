@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Send, MessageCircleHeart } from "lucide-react";
+import { Send, MessageCircleHeart, Paperclip, X } from "lucide-react";
 import { LogoBadge } from "./Header";
+import { DOC_DRAG_TYPE, type UploadedDoc } from "./DocumentsPanel";
 
 export type ChatMessage = { id: string; role: "user" | "assistant"; content: string };
 
@@ -24,13 +25,20 @@ export function ChatPanel({
   thinking,
   disabled,
   onSend,
+  attachedDoc,
+  onAttachDoc,
+  onRemoveAttachment,
 }: {
   messages: ChatMessage[];
   thinking: boolean;
   disabled: boolean;
   onSend: (text: string) => void;
+  attachedDoc: UploadedDoc | null;
+  onAttachDoc: (id: string) => void;
+  onRemoveAttachment: () => void;
 }) {
   const [value, setValue] = useState("");
+  const [dragOver, setDragOver] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,7 +53,36 @@ export function ChatPanel({
   };
 
   return (
-    <section className="flex h-full min-h-0 flex-col rounded-3xl border border-border bg-card shadow-soft">
+    <section
+      className={`relative flex h-full min-h-0 flex-col rounded-3xl border bg-card shadow-soft transition-colors ${
+        dragOver ? "border-primary ring-2 ring-ring/30" : "border-border"
+      }`}
+      onDragOver={(e) => {
+        if (e.dataTransfer.types.includes(DOC_DRAG_TYPE)) {
+          e.preventDefault();
+          setDragOver(true);
+        }
+      }}
+      onDragLeave={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragOver(false);
+      }}
+      onDrop={(e) => {
+        const id = e.dataTransfer.getData(DOC_DRAG_TYPE);
+        if (id) {
+          e.preventDefault();
+          onAttachDoc(id);
+        }
+        setDragOver(false);
+      }}
+    >
+      {dragOver && (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-3xl bg-secondary/70">
+          <p className="flex items-center gap-2 rounded-full bg-card px-4 py-2 text-sm font-semibold shadow-soft">
+            <Paperclip className="size-4 text-primary" />
+            Drop to attach this document
+          </p>
+        </div>
+      )}
       <div className="flex-1 space-y-4 overflow-y-auto p-5">
         {messages.length === 0 && !thinking ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
@@ -90,6 +127,25 @@ export function ChatPanel({
       </div>
 
       <div className="border-t border-border p-4">
+        {attachedDoc && (
+          <div className="mb-2.5 flex items-center gap-2 rounded-xl border border-primary/40 bg-secondary px-3 py-2">
+            <Paperclip className="size-3.5 shrink-0 text-primary" />
+            <span className="min-w-0 flex-1 truncate text-xs font-semibold">
+              {attachedDoc.filename}
+            </span>
+            <span className="hidden text-[10px] text-muted-foreground sm:inline">
+              attached to your next message
+            </span>
+            <button
+              type="button"
+              onClick={onRemoveAttachment}
+              aria-label="Remove attachment"
+              className="flex size-5 shrink-0 items-center justify-center rounded-full hover:bg-background"
+            >
+              <X className="size-3" />
+            </button>
+          </div>
+        )}
         <div className="flex items-end gap-2">
           <input
             value={value}

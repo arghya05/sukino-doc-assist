@@ -45,16 +45,39 @@ function Index() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [attachedDocId, setAttachedDocId] = useState<string | null>(null);
+  const attachedDoc = docs.find((d) => d.id === attachedDocId) ?? null;
+
   const handleFiles = async (files: File[]) => {
-    if (!sessionId) return;
     setUploadError(null);
     setUploading(true);
     for (const file of files) {
+      const url = URL.createObjectURL(file);
       try {
+        if (!sessionId) throw new Error("no session");
         const result = await uploadFile(sessionId, file);
-        setDocs((prev) => [...prev, { ...result, id: uid(), url: URL.createObjectURL(file) }]);
+        setDocs((prev) => [...prev, { ...result, id: uid(), url }]);
       } catch (e) {
-        setUploadError(e instanceof Error ? e.message : `Could not upload ${file.name}.`);
+        // Backend unavailable — still add the document locally so it can be viewed.
+        setDocs((prev) => [
+          ...prev,
+          {
+            id: uid(),
+            url,
+            filename: file.name,
+            type: file.type || "document",
+            chunks: 0,
+            preview:
+              "Saved locally for viewing. The assistant backend is unreachable, so Q&A on this file will work once it reconnects.",
+          },
+        ]);
+        setUploadError(
+          sessionId
+            ? e instanceof Error
+              ? e.message
+              : `Could not upload ${file.name} to the backend — saved locally for viewing.`
+            : "Backend offline — documents are saved locally and can still be viewed.",
+        );
       }
     }
     setUploading(false);
@@ -62,10 +85,16 @@ function Index() {
 
   const handleSend = async (text: string) => {
     if (!sessionId) return;
-    setMessages((prev) => [...prev, { id: uid(), role: "user", content: text }]);
+    const doc = attachedDoc;
+    setAttachedDocId(null);
+    const content = doc ? `Attachment: ${doc.filename}\n\n${text}` : text;
+    setMessages((prev) => [...prev, { id: uid(), role: "user", content }]);
     setThinking(true);
     try {
-      const reply = await sendChat(sessionId, text);
+      const wireText = doc
+        ? `Regarding the uploaded document "${doc.filename}": ${text}`
+        : text;
+      const reply = await sendChat(sessionId, wireText);
       setMessages((prev) => [...prev, { id: uid(), role: "assistant", content: reply }]);
     } catch (e) {
       setMessages((prev) => [
@@ -99,7 +128,7 @@ function Index() {
             uploading={uploading}
             error={uploadError}
             onFiles={handleFiles}
-            disabled={!sessionId}
+            disabled={false}
           />
         </div>
         <div className="h-[70vh] lg:h-[calc(100vh-8.5rem)]">
@@ -108,6 +137,9 @@ function Index() {
             thinking={thinking}
             disabled={!sessionId}
             onSend={handleSend}
+            attachedDoc={attachedDoc}
+            onAttachDoc={setAttachedDocId}
+            onRemoveAttachment={() => setAttachedDocId(null)}
           />
         </div>
       </main>
