@@ -81,9 +81,11 @@ function Index() {
       <main className="mx-auto grid w-full max-w-7xl flex-1 gap-5 px-5 py-5 lg:grid-cols-[minmax(300px,360px)_1fr]">
         {sessionError && (
           <div className="rounded-2xl bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive lg:col-span-2">
-            {sessionError}
+            Couldn’t reach the assistant backend ({sessionError}). Check that the API is running
+            and that VITE_API_BASE_URL points to it.
           </div>
         )}
+
         <div className="lg:h-[calc(100vh-8.5rem)]">
           <DocumentsPanel
             docs={docs}
