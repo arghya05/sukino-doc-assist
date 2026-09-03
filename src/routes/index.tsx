@@ -128,7 +128,7 @@ function Index() {
             uploading={uploading}
             error={uploadError}
             onFiles={handleFiles}
-            disabled={!sessionId}
+            disabled={false}
           />
         </div>
         <div className="h-[70vh] lg:h-[calc(100vh-8.5rem)]">
@@ -137,6 +137,9 @@ function Index() {
             thinking={thinking}
             disabled={!sessionId}
             onSend={handleSend}
+            attachedDoc={attachedDoc}
+            onAttachDoc={setAttachedDocId}
+            onRemoveAttachment={() => setAttachedDocId(null)}
           />
         </div>
       </main>
