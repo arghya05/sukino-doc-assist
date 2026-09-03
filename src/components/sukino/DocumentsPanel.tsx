@@ -213,7 +213,18 @@ export function DocumentsPanel({
                     {scan ? <Pill className="size-4" /> : <FileText className="size-4" />}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold">{doc.filename}</p>
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="truncate text-sm font-semibold">{doc.filename}</p>
+                      <button
+                        type="button"
+                        onClick={() => setViewing(doc)}
+                        className="flex shrink-0 items-center gap-1 rounded-full border border-border bg-card px-2 py-0.5 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/60 hover:text-primary"
+                        aria-label={`View ${doc.filename}`}
+                      >
+                        <Eye className="size-3" />
+                        View
+                      </button>
+                    </div>
                     <span
                       className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
                         scan
@@ -233,6 +244,8 @@ export function DocumentsPanel({
           })
         )}
       </div>
+
+      {viewing && <DocumentViewer doc={viewing} onClose={() => setViewing(null)} />}
     </aside>
   );
 }
