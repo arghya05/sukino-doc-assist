@@ -6,5 +6,5 @@
 - [x] Sample documents delivered as real PDF files (public/samples/*.pdf)
 - [x] Sample PDFs include doctor signature block (signature, name, reg. no., clinic stamp)
 - [x] In-app document viewer (PDF/image/text modal with View button)
-- [ ] Documents work offline: local preview + View even when backend is down
-- [ ] Drag documents from panel into chat to attach as context
+- [x] Documents work offline: local preview + View even when backend is down
+- [x] Drag documents from panel into chat to attach as context
