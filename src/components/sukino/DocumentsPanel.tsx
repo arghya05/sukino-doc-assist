@@ -204,7 +204,13 @@ export function DocumentsPanel({
             return (
               <article
                 key={doc.id}
-                className="rounded-2xl border border-border bg-background p-3.5 transition-shadow hover:shadow-soft"
+                draggable
+                onDragStart={(e) => {
+                  e.dataTransfer.setData(DOC_DRAG_TYPE, doc.id);
+                  e.dataTransfer.effectAllowed = "copy";
+                }}
+                title="Drag into the chat to ask about this document"
+                className="cursor-grab rounded-2xl border border-border bg-background p-3.5 transition-shadow hover:shadow-soft active:cursor-grabbing"
               >
                 <div className="flex items-start gap-3">
                   <span
