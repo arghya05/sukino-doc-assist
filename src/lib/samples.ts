@@ -1,10 +1,13 @@
 export type Sample = { id: string; label: string; filename: string; content: string };
 
+/** Sample files are real signed PDFs served from /public/samples. */
+export const sampleUrl = (s: Sample) => `/samples/${s.filename}`;
+
 export const SAMPLES: Sample[] = [
   {
     id: "metformin",
     label: "Metformin prescription",
-    filename: "metformin-prescription.txt",
+    filename: "metformin-prescription.pdf",
     content: `SUKINO HEALTHCARE — OUTPATIENT PRESCRIPTION
 Patient: Ramesh Iyer, 58 M   |   UHID: SK-44192
 Date: 12 March 2026        |   Consultant: Dr. A. Nair, MD (Gen. Med.)
@@ -28,7 +31,7 @@ Review after 4 weeks with repeat FBS/PPBS and renal function tests.`,
   {
     id: "warfarin",
     label: "Warfarin prescription",
-    filename: "warfarin-prescription.txt",
+    filename: "warfarin-prescription.pdf",
     content: `SUKINO HEALTHCARE — ANTICOAGULATION CLINIC PRESCRIPTION
 Patient: Fatima Sheikh, 66 F  |  UHID: SK-51877
 Date: 5 March 2026          |  Consultant: Dr. P. Menon, DM (Cardiology)
@@ -50,7 +53,7 @@ Nursing notes:
   {
     id: "discharge",
     label: "Discharge summary",
-    filename: "discharge-summary.txt",
+    filename: "discharge-summary.pdf",
     content: `SUKINO HEALTHCARE — DISCHARGE SUMMARY
 Patient: Anil Kumar, 72 M   |  UHID: SK-38210
 Admitted: 26 Feb 2026       |  Discharged: 4 March 2026
@@ -79,7 +82,7 @@ Care plan at home:
   {
     id: "amlodipine",
     label: "Hypertension prescription",
-    filename: "amlodipine-prescription.txt",
+    filename: "amlodipine-prescription.pdf",
     content: `SUKINO HEALTHCARE — CARDIOLOGY OPD PRESCRIPTION
 Patient: Suresh Patil, 61 M  |  UHID: SK-60214
 Date: 18 March 2026          |  Consultant: Dr. K. Deshpande, MD, DM (Cardio)
@@ -100,7 +103,7 @@ Review after 4 weeks with lipid profile and serum creatinine.`,
   {
     id: "insulin",
     label: "Insulin chart",
-    filename: "insulin-prescription.txt",
+    filename: "insulin-prescription.pdf",
     content: `SUKINO HEALTHCARE — INSULIN PRESCRIPTION & SLIDING SCALE
 Patient: Lakshmi Narayanan, 54 F  |  UHID: SK-47765
 Date: 20 March 2026               |  Consultant: Dr. R. Bhat, MD (Endocrinology)
@@ -126,7 +129,7 @@ Nursing notes:
   {
     id: "antibiotic",
     label: "Antibiotic course (UTI)",
-    filename: "uti-antibiotic-prescription.txt",
+    filename: "uti-antibiotic-prescription.pdf",
     content: `SUKINO HEALTHCARE — OUTPATIENT PRESCRIPTION
 Patient: Meera Joshi, 34 F   |  UHID: SK-58003
 Date: 9 March 2026           |  Consultant: Dr. N. Verma, MBBS, MD
@@ -148,7 +151,7 @@ Nursing notes:
   {
     id: "paediatric",
     label: "Paediatric prescription",
-    filename: "paediatric-prescription.txt",
+    filename: "paediatric-prescription.pdf",
     content: `SUKINO HEALTHCARE — PAEDIATRIC OPD PRESCRIPTION
 Patient: Aarav Gupta, 4 years M, weight 16 kg  |  UHID: SK-61190
 Date: 22 March 2026  |  Consultant: Dr. S. Krishnan, MD (Paediatrics)
@@ -171,7 +174,7 @@ Review after 3 days or earlier if fever persists beyond 48 hours.`,
   {
     id: "painmgmt",
     label: "Post-op pain plan",
-    filename: "post-op-pain-prescription.txt",
+    filename: "post-op-pain-prescription.pdf",
     content: `SUKINO HEALTHCARE — POST-OPERATIVE ORDERS
 Patient: Joseph Mathew, 68 M  |  UHID: SK-49221
 Surgery: Right total knee replacement, 15 March 2026
@@ -194,7 +197,7 @@ Nursing notes:
   {
     id: "thyroid",
     label: "Thyroid prescription",
-    filename: "thyroid-prescription.txt",
+    filename: "thyroid-prescription.pdf",
     content: `SUKINO HEALTHCARE — ENDOCRINOLOGY OPD PRESCRIPTION
 Patient: Priya Sharma, 41 F  |  UHID: SK-55418
 Date: 11 March 2026          |  Consultant: Dr. R. Bhat, MD (Endocrinology)
@@ -215,7 +218,7 @@ Repeat TSH after 8 weeks before dose revision.`,
   {
     id: "discharge-stroke",
     label: "Discharge — stroke rehab",
-    filename: "discharge-summary-stroke.txt",
+    filename: "discharge-summary-stroke.pdf",
     content: `SUKINO HEALTHCARE — DISCHARGE SUMMARY (TRANSITION CARE)
 Patient: Govind Rao, 69 M   |  UHID: SK-40873
 Admitted: 20 Feb 2026       |  Discharged: 14 March 2026
@@ -246,7 +249,7 @@ Care plan at home:
   {
     id: "discharge-cardiac",
     label: "Discharge — post-CABG",
-    filename: "discharge-summary-cabg.txt",
+    filename: "discharge-summary-cabg.pdf",
     content: `SUKINO HEALTHCARE — DISCHARGE SUMMARY
 Patient: Harpreet Singh, 58 M  |  UHID: SK-52640
 Admitted: 1 March 2026         |  Discharged: 12 March 2026
@@ -277,7 +280,7 @@ Care plan at home:
   {
     id: "discharge-maternity",
     label: "Discharge — post-delivery",
-    filename: "discharge-summary-maternity.txt",
+    filename: "discharge-summary-maternity.pdf",
     content: `SUKINO HEALTHCARE — DISCHARGE SUMMARY (OBSTETRICS)
 Patient: Sneha Kulkarni, 29 F  |  UHID: SK-59904
 Admitted: 16 March 2026        |  Discharged: 19 March 2026
@@ -306,7 +309,7 @@ Care plan at home:
   {
     id: "discharge-dialysis",
     label: "Discharge — CKD/dialysis",
-    filename: "discharge-summary-ckd.txt",
+    filename: "discharge-summary-ckd.pdf",
     content: `SUKINO HEALTHCARE — DISCHARGE SUMMARY
 Patient: Abdul Rahman, 63 M  |  UHID: SK-46318
 Admitted: 5 March 2026       |  Discharged: 13 March 2026
