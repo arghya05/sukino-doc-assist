@@ -38,6 +38,13 @@ function Index() {
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      docs.forEach((d) => URL.revokeObjectURL(d.url));
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleFiles = async (files: File[]) => {
     if (!sessionId) return;
     setUploadError(null);
@@ -45,7 +52,7 @@ function Index() {
     for (const file of files) {
       try {
         const result = await uploadFile(sessionId, file);
-        setDocs((prev) => [...prev, { ...result, id: uid() }]);
+        setDocs((prev) => [...prev, { ...result, id: uid(), url: URL.createObjectURL(file) }]);
       } catch (e) {
         setUploadError(e instanceof Error ? e.message : `Could not upload ${file.name}.`);
       }
