@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { FileText, Pill, Upload, Loader2, AlertCircle } from "lucide-react";
-import { SAMPLES } from "@/lib/samples";
+import { SAMPLES, sampleUrl } from "@/lib/samples";
 import type { UploadResult } from "@/lib/api";
 
 const ACCEPT = ".pdf,.png,.jpg,.jpeg,.webp,.txt,.md";
