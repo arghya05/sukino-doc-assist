@@ -29,7 +29,10 @@ export function Header({ role, onRoleChange }: { role: Role; onRoleChange: (r: R
           <LogoBadge className="size-10 text-lg" />
           <div className="leading-tight">
             <h1 className="text-base font-bold tracking-tight">Sukino Healthcare</h1>
-            <p className="text-xs text-muted-foreground">Clinical document assistant</p>
+            <p className="text-xs text-muted-foreground">
+              Clinical document assistant · India
+            </p>
+
           </div>
         </div>
 
