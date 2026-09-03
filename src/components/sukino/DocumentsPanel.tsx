@@ -108,6 +108,7 @@ export function DocumentsPanel({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
+  const [viewing, setViewing] = useState<UploadedDoc | null>(null);
 
   return (
     <aside className="flex h-full flex-col gap-4 overflow-y-auto rounded-3xl border border-border bg-card p-5 shadow-soft">
