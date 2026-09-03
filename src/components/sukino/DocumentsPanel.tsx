@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { FileText, Pill, Upload, Loader2, AlertCircle } from "lucide-react";
-import { SAMPLES } from "@/lib/samples";
+import { SAMPLES, sampleUrl } from "@/lib/samples";
 import type { UploadResult } from "@/lib/api";
 
 const ACCEPT = ".pdf,.png,.jpg,.jpeg,.webp,.txt,.md";
@@ -89,9 +89,11 @@ export function DocumentsPanel({
               key={s.id}
               type="button"
               disabled={disabled || uploading}
-              onClick={() =>
-                onFiles([new File([s.content], s.filename, { type: "text/plain" })])
-              }
+              onClick={async () => {
+                const res = await fetch(sampleUrl(s));
+                const blob = await res.blob();
+                onFiles([new File([blob], s.filename, { type: "application/pdf" })]);
+              }}
               className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-primary/60 hover:bg-secondary disabled:opacity-50"
             >
               {s.label}
